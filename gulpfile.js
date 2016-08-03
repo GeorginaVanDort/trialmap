@@ -55,8 +55,8 @@ gulp.task("build", ['clean'], function() {
 
 gulp.task('bowerJS', function(){
   return gulp.src(lib.ext('js').files)
-  .pipe(concat('vendor.min.js'))
-  .pipe(uglify())
+  .pipe(concat('vendor.js'))
+  // .pipe(uglify())
   .pipe(gulp.dest('./build/js'));
 });
 

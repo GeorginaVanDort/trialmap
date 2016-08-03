@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="build/js/vendor.js"></script>
     <script
     src="http://maps.googleapis.com/maps/api/js">
     </script>
-    <script src="js/map.js"></script>
+    <script src="build/js/app.js"></script>
     <title>Map</title>
   </head>
 
   <body>
-    <div id="googleMap" style="width:500px;height:380px;">hello</div>
-
+    <div id="map" style="width:500px;height:380px;"></div>
+    <div class="">
+        <h1>Find a Code School!</h1>
+        <label for="location">Enter a location:</label>
+        <select id="schoolNames" class="form-group" name="">
+          <option value="epicodus">Epicodus</option>
+          <option value="codefellows">Code Fellows</option>
+          <option value="pdxcodeguild">PDX Code Guild</option>
+        </select>
+        <button class="btn-success" id="schoolFinder">Find It!</button>
+        <div class="showLocation"></div>
+      </div>
   </body>
 </html>
