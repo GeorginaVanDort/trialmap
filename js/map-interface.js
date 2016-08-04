@@ -1,5 +1,5 @@
 var CodeSchool = require('./../js/map.js').getcodeSchoolModule;
-var Search = require('./../js/search.js').searchModule;
+// var Search = require('./../js/search.js').searchModule;
 
 $(document).ready(function(){
   $('#schoolFinder').click(function() {
@@ -28,8 +28,8 @@ $(document).ready(function(){
   $("#coffee").click(function() {
     var locationInput = $("#locationInput").val();
     var coffee = "coffee";
-    var coffeeShop = new Search(locationInput, coffee);
-    coffeeShop.coffeeSearch();
+    var coffeeShop = new CodeSchool(1, locationInput);
+    coffeeShop.findThings();
     console.log("hi1");
   });
 

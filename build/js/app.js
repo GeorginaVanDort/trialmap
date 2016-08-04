@@ -6,6 +6,9 @@ function CodeSchool(code_school, address) {
 
 var geocoder;
 var map;
+var service;
+var infowindow;
+
 
 CodeSchool.prototype.codeAddress = function() {
   geocoder = new google.maps.Geocoder();
@@ -29,43 +32,18 @@ CodeSchool.prototype.codeAddress = function() {
     }
   });
 };
+CodeSchool.prototype.findThings = function () {
 
-exports.getcodeSchoolModule = CodeSchool;
+  var request = {
+    location: this.address,
+    radius: '500',
+    types: ["coffee"]
+  };
 
-},{}],2:[function(require,module,exports){
-// This example adds a search box to a map, using the Google Place Autocomplete
-  // feature. People can enter geographical searches. The search box will return a
-  // pick list containing a mix of places and predicted search terms.
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
 
-  // This example requires the Places library. Include the libraries=places
-  // parameter when you first load the API. For example:
-  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-function Search(locationInput, coffee) {
-  this.coffee = coffee;
-  this.locationInput = locationInput;
-}
-  Search.prototype.coffeeSearch = function () {
-    console.log("hi2");
-    var map;
-    var service;
-    var infowindow;
-
-    function initialize() {
-    var locationInput = new google.maps.LatLng();
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: this.locationInput,
-        zoom: 15
-      });
-
-    var request = {
-      location: this.locationInput,
-      radius: '500',
-      types: [this.coffee]
-    };
-
-    service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callback);
-  }
 
   function callback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -76,11 +54,12 @@ function Search(locationInput, coffee) {
     }
   }
 };
-  exports.searchModule = Search;
 
-},{}],3:[function(require,module,exports){
+exports.getcodeSchoolModule = CodeSchool;
+
+},{}],2:[function(require,module,exports){
 var CodeSchool = require('./../js/map.js').getcodeSchoolModule;
-var Search = require('./../js/search.js').searchModule;
+// var Search = require('./../js/search.js').searchModule;
 
 $(document).ready(function(){
   $('#schoolFinder').click(function() {
@@ -109,8 +88,8 @@ $(document).ready(function(){
   $("#coffee").click(function() {
     var locationInput = $("#locationInput").val();
     var coffee = "coffee";
-    var coffeeShop = new Search(locationInput, coffee);
-    coffeeShop.coffeeSearch();
+    var coffeeShop = new CodeSchool(1, locationInput);
+    coffeeShop.findThings();
     console.log("hi1");
   });
 
@@ -120,4 +99,4 @@ $(document).ready(function(){
   $('#time').text(moment());
 });
 
-},{"./../js/map.js":1,"./../js/search.js":2}]},{},[3]);
+},{"./../js/map.js":1}]},{},[2]);
