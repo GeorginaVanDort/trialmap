@@ -10,6 +10,7 @@ var infowindow;
 
 
 CodeSchool.prototype.codeAddress = function() {
+
   geocoder = new google.maps.Geocoder();
 
   geocoder.geocode( { 'address': this.address}, function(results, status) {
@@ -31,26 +32,45 @@ CodeSchool.prototype.codeAddress = function() {
     }
   });
 };
-CodeSchool.prototype.findThings = function () {
 
-  var request = {
-    location: this.address,
-    radius: '500',
-    types: ["coffee"]
-  };
+// prototype 2 - searches for mulitple "coffee" links 500m around this.address//
+CodeSchool.prototype.findThings = function() {
+  function initMap() {
+    var pyrmont = {lat: -33.867, lng: 151.195};
 
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: pyrmont,
+      zoom: 15
+    });
 
+    infowindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+    service.nearbySearch({
+      location: pyrmont,
+      radius: 500,
+      type: ['store']
+    }, callback);
+  }
 
   function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
-        var place = results[i];
         createMarker(results[i]);
       }
     }
+  }
+
+  function createMarker(place) {
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(place.name);
+      infowindow.open(map, this);
+    });
   }
 };
 
