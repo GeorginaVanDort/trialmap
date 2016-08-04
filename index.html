@@ -8,27 +8,20 @@
   </head>
 
   <body>
-    <div id="map" style="width:500px;height:380px;"></div>
-    <div class="">
-        <h1>Find a Code School!</h1>
-        <label for="location">Enter a location:</label>
-        <select id="schoolNames" class="form-group" name="">
-          <option value="epicodus">Epicodus</option>
-          <option value="codefellows">Code Fellows</option>
-          <option value="pdxcodeguild">PDX Code Guild</option>
-        </select>
-        <button class="btn-success" id="schoolFinder">Find It!</button>
-        <div class="showLocation"></div>
+    <div id="map" style="width:1000px;height:700px;"></div>
+
+      <div class="">
+        <label for="">Enter a city</label>
+        <input id="city" placeholder="Enter a city">
+        <!-- <input id="thing" placeholder="thing of interest"> -->
+        <button class="btn-success" id="citySearch">Find Me the city!</button>
       </div>
 
       <div class="">
-        <label for="">Enter an address</label>
-        <input id="locationInput" placeholder="Enter an address">
-        <button class="btn-success" id="locationFinder">Search!</button>
-      </div>
-
-      <div class="">
-        <button class="btn-success" id="init">Find Me Coffee!</button>
+        <label for="">Enter something of interest</label>
+        <input id="interest" placeholder="Enter a search term">
+        <!-- <input id="thing" placeholder="thing of interest"> -->
+        <button class="btn-success" id="interestSearch">Find Me!</button>
       </div>
 
   </body>

@@ -1,19 +1,19 @@
-function CodeSchool(code_school, address) {
-  this.name = code_school;
-  this.address = address;
+function SearchCity (city, thing) {
+  this.city = city;
+  this.thing = thing;
 }
 
 var geocoder;
 var map;
 var service;
 var infowindow;
+var setLocation;
 
-
-CodeSchool.prototype.codeAddress = function() {
+SearchCity.prototype.getAddress = function() {
 
   geocoder = new google.maps.Geocoder();
 
-  geocoder.geocode( { 'address': this.address}, function(results, status) {
+  geocoder.geocode( { 'address': this.city }, function(results, status) {
     if (status == 'OK') {
 
       var latlng = new google.maps.LatLng("");
@@ -30,27 +30,32 @@ CodeSchool.prototype.codeAddress = function() {
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
+    setLocation = results[0].geometry.location;
   });
 };
 
-// prototype 2 - searches for mulitple "coffee" links 500m around this.address//
-CodeSchool.prototype.findThings = function() {
-  function initMap() {
-    var pyrmont = {lat: -33.867, lng: 151.195};
+    console.log("HI!!!");
 
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: pyrmont,
-      zoom: 15
-    });
 
-    infowindow = new google.maps.InfoWindow();
-    var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch({
-      location: pyrmont,
-      radius: 500,
-      type: ['store']
-    }, callback);
-  }
+// second prototype//
+
+SearchCity.prototype.getThing = function () {
+  var self = this;
+  geocoder = new google.maps.Geocoder();
+
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: setLocation,
+    zoom: 14
+  });
+
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch({
+    location: setLocation,
+    radius: 2000,
+    type: [this.thing]
+  }, callback);
 
   function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -72,6 +77,7 @@ CodeSchool.prototype.findThings = function() {
       infowindow.open(map, this);
     });
   }
+
 };
 
-exports.getcodeSchoolModule = CodeSchool;
+exports.citySearchModule = SearchCity;
