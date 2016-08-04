@@ -1,7 +1,6 @@
 var CodeSchool = require('./../js/map.js').getcodeSchoolModule;
 var Search = require('./../js/search.js').searchModule;
 
-
 $(document).ready(function(){
   $('#schoolFinder').click(function() {
     var code_school = $('#schoolNames').val();
