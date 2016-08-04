@@ -26,10 +26,11 @@ $(document).ready(function(){
   });
 
   $("#coffee").click(function() {
+    var locationInput = $("#locationInput").val();
     var coffee = "coffee";
-    console.log("hi");
-    var coffeeShop = new Search(coffee);
+    var coffeeShop = new Search(locationInput, coffee);
     coffeeShop.coffeeSearch();
+    console.log("hi1");
   });
 
 });

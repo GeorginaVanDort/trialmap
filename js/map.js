@@ -16,7 +16,7 @@ CodeSchool.prototype.codeAddress = function() {
       var mapOptions = {
         zoom: 16,
         center: latlng
-      }
+      };
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
       map.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
@@ -27,6 +27,6 @@ CodeSchool.prototype.codeAddress = function() {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
-}
+};
 
 exports.getcodeSchoolModule = CodeSchool;

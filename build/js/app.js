@@ -17,7 +17,7 @@ CodeSchool.prototype.codeAddress = function() {
       var mapOptions = {
         zoom: 16,
         center: latlng
-      }
+      };
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
       map.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
@@ -28,94 +28,59 @@ CodeSchool.prototype.codeAddress = function() {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
-}
+};
 
 exports.getcodeSchoolModule = CodeSchool;
 
 },{}],2:[function(require,module,exports){
 // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
+  // feature. People can enter geographical searches. The search box will return a
+  // pick list containing a mix of places and predicted search terms.
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-function Search(coffee) {
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+function Search(locationInput, coffee) {
   this.coffee = coffee;
+  this.locationInput = locationInput;
 }
-      Search.prototype.coffeeSearch = function () {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
-          zoom: 13,
-          mapTypeId: 'roadmap'
-        });
+  Search.prototype.coffeeSearch = function () {
+    console.log("hi2");
+    var map;
+    var service;
+    var infowindow;
 
-        // Create the search box and link it to the UI element.
-        var input = coffee;
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    function initialize() {
+    var locationInput = new google.maps.LatLng();
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: this.locationInput,
+        zoom: 15
+      });
 
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
-        });
+    var request = {
+      location: this.locationInput,
+      radius: '500',
+      types: [this.coffee]
+    };
 
-        var markers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
+    service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callback);
+  }
 
-          if (places.length === 0) {
-            return;
-          }
-
-          // Clear out the old markers.
-          markers.forEach(function(marker) {
-            marker.setMap(null);
-          });
-          markers = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-        });
-      };
-
+  function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        var place = results[i];
+        createMarker(results[i]);
+      }
+    }
+  }
+};
   exports.searchModule = Search;
 
 },{}],3:[function(require,module,exports){
 var CodeSchool = require('./../js/map.js').getcodeSchoolModule;
 var Search = require('./../js/search.js').searchModule;
-
 
 $(document).ready(function(){
   $('#schoolFinder').click(function() {
@@ -142,10 +107,11 @@ $(document).ready(function(){
   });
 
   $("#coffee").click(function() {
+    var locationInput = $("#locationInput").val();
     var coffee = "coffee";
-    console.log("hi");
-    var coffeeShop = new Search(coffee);
+    var coffeeShop = new Search(locationInput, coffee);
     coffeeShop.coffeeSearch();
+    console.log("hi1");
   });
 
 });

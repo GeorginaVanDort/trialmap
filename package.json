@@ -1,10 +1,7 @@
 {
   "name": "maps",
   "version": "1.0.0",
-<<<<<<< HEAD
-=======
   "description": "",
->>>>>>> f368c25ebf3ada12d8f2725aefb7d12e318ad708
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,11 +20,6 @@
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.2",
     "vinyl-source-stream": "^1.1.0"
-<<<<<<< HEAD
   },
-  "dependencies": {},
-  "description": ""
-=======
-  }
->>>>>>> f368c25ebf3ada12d8f2725aefb7d12e318ad708
+  "dependencies": {}
 }
